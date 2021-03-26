@@ -1,40 +1,86 @@
 
+/**
+ * Sorts numbers of the given array by storing the numbers on buckets.
+ * @inpArr: Array of numbers
+ * @size: Size of the given array
+ * @pos: Radix base that calculates the position of the numbers
+ */
 const bucketSort = (inpArr, size, pos) => {
 
 	let i = 0;
-	const range = 10;
-	const outputArr = [];
-	let bucketArr = Array.from({length: range}, () => []);
-	let arrCopy = [...inpArr];
 
+	// This is only the range of numbers that we will be handling. 
+	const range = 10;
+
+	// Array where out result will be stored.
+	const outputArr = [];
+
+	/**
+	 *  Creating the bucket array where numbers will be temporarily stored.
+	 */
+	let bucketArr = Array.from({length: range}, () => []);
+
+	/**
+	 * Looping through the size of the given array so we can access
+	 * to all its items.
+	 */
 	while(i < size) {
 
-		const position = parseInt((arrCopy[i] / pos) % 10, 10);
+		/**
+		 * Calculating the index, where the number of the given position
+		 * is going to be located.
+		 */
+		const index = parseInt((inpArr[i] / pos) % 10, 10);
 
-		bucketArr[position].push(arrCopy[i]);
+		/**
+		 * Adding the current item of the given array, into the calculated
+		 * index of the bucket array. 
+		 */
+		bucketArr[index].push(inpArr[i]);
 
+		// increasing counter
 		i++;
 	}
 
+	// Restart counter
 	i = 0;
+
+	/**
+	 * Looping through all the buckets
+	 */
 	while(i < bucketArr.length) {
 
 		let j = i;
 
+		/**
+		 * For each bucket we loop all its items.
+		 */
 		while(bucketArr[i].length > 0) {
 
+			/**
+			 * Getting the number located in the first position of bucket array 
+			 * at the same time removing it from the array and adding it into 
+			 * the output array.
+			 */
 			outputArr.push(bucketArr[i].shift());
 		
 		}
 
 		i++;
 	}
+
+	// Send back the result.
 	return outputArr;
 }
 
-const radixSort = (arr) => {
+const radixSort = (arr = []) => {
 
 	console.log('Input Array: ', arr);
+
+	if (arr.length === 0) {
+		console.log('Nothing to sort!')
+		return;
+	}
 
 	/**
 	 * Getting the size of the given array, will help us to create 
@@ -73,15 +119,14 @@ const radixSort = (arr) => {
 		 */
 		pos = parseInt((pos * 10), 10);
 
-		// break;
+		break;
 	}
 
 	return arr;
 	
 }
 
-
-const inputArr = [170, 45, 963, 75, 90, 199, 599, 802, 24, 2, 66];
+const inputArr = [170, 45, 3.5, 963, 78990, 987333.97, 75, 90, 199, 599, 1.8, 802, 24, 2, 66];
 
 const res = radixSort(inputArr);
 
