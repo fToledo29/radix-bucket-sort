@@ -119,7 +119,6 @@ const radixSort = (arr = []) => {
 		 */
 		pos = parseInt((pos * 10), 10);
 
-		break;
 	}
 
 	return arr;
